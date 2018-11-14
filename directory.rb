@@ -6,24 +6,25 @@ def input_students
   # get the first name
   puts "Please insert the student's name"
   name = gets.chomp
-  puts "Please insert the student's country of birth"
-  country_of_birth = gets.chomp
-  puts "Please insert the student's main hobby"
-  main_hobby = gets.chomp
+
   # while the name is not empty, repeat this code
   while !name.empty? do
+    puts "Please insert the student's country of birth"
+    country_of_birth = gets.chomp
+    puts "Please insert the student's main hobby"
+    main_hobby = gets.chomp
+    puts "What cohort are you in?"
+    cohort = gets.chomp
+    if cohort.empty?
+       cohort = "Unknown"
+    end
+    cohort.to_sym
     # add the student hash to the array
-    students << {name: name, country: country_of_birth, hobby: main_hobby, cohort: :november}
+    students << {name: name, country: country_of_birth, hobby: main_hobby, cohort: cohort}
     puts "Now we have #{students.count} students"
     # get another name from the user
     puts "Please insert the student's name"
     name = gets.chomp
-    if name != ""
-        puts "Please insert the student's country of birth"
-        country_of_birth = gets.chomp
-        puts "Please insert the student's main hobby"
-        main_hobby = gets.chomp
-    end
   end
   # return the array of students
   students
