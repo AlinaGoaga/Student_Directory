@@ -5,16 +5,16 @@ def input_students
   students = []
   # get the first name
   puts "Please insert the student's name"
-  name = gets.chomp
+  name = gets.strip
 
   # while the name is not empty, repeat this code
   while !name.empty? do
     puts "Please insert the student's country of birth"
-    country_of_birth = gets.chomp
+    country_of_birth = gets.strip
     puts "Please insert the student's main hobby"
-    main_hobby = gets.chomp
+    main_hobby = gets.strip
     puts "What cohort are you in?"
-    cohort = gets.chomp
+    cohort = gets.strip
     if cohort.empty?
       cohort = "Unknown"
     end
@@ -25,7 +25,7 @@ def input_students
     puts "Now we have #{students.count} students" if students.count != 1
     # get another name from the user
     puts "Please insert the student's name"
-    name = gets.chomp
+    name = gets.strip
   end
   # return the array of students
   students
