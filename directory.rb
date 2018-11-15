@@ -60,7 +60,7 @@ def print_grouped_by_cohort(students)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(100)
+  puts "Overall, we have #{names.count} great students".center(100) if names.count != 0
 end
 #nothing happens until we call the methods
 students = input_students
