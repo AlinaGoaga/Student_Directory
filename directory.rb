@@ -16,9 +16,9 @@ def input_students
     puts "What cohort are you in?"
     cohort = gets.chomp
     if cohort.empty?
-       cohort = "Unknown"
+      cohort = "Unknown"
     end
-    cohort.to_sym
+    cohort = cohort.to_sym
     # add the student hash to the array
     students << {name: name, country: country_of_birth, hobby: main_hobby, cohort: cohort}
     puts "Now we have #{students.count} students"
@@ -43,6 +43,21 @@ def print(students)
   end
 end
 
+def print_grouped_by_cohort(students)
+  cohorts = []
+  for i in 0...students.length
+    cohorts << students[i][:cohort]
+  end
+  cohorts.uniq!.each do |cohort|
+    puts cohort
+    for i in 0...students.length
+      if students[i][:cohort] == cohort
+      puts students[i][:name]
+      end
+    end
+  end
+end
+
 def print_footer(names)
   puts "Overall, we have #{names.count} great students".center(100)
 end
@@ -51,3 +66,4 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+print_grouped_by_cohort(students)
