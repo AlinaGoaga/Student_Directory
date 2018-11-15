@@ -21,7 +21,8 @@ def input_students
     cohort = cohort.to_sym
     # add the student hash to the array
     students << {name: name, country: country_of_birth, hobby: main_hobby, cohort: cohort}
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{students.count} student" if students.count == 1
+    puts "Now we have #{students.count} students" if students.count != 1
     # get another name from the user
     puts "Please insert the student's name"
     name = gets.chomp
@@ -48,7 +49,7 @@ def print_grouped_by_cohort(students)
   for i in 0...students.length
     cohorts << students[i][:cohort]
   end
-  cohorts.uniq!.each do |cohort|
+  cohorts.uniq.each do |cohort|
     puts cohort
     for i in 0...students.length
       if students[i][:cohort] == cohort
