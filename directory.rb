@@ -3,6 +3,7 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -12,13 +13,12 @@ def input_students
   puts "To finish, just hit return twice"
   puts "Please insert the student's name"
   name = gets.strip
-
   while !name.empty? do
     puts "Please insert the student's country of birth"
     country_of_birth = gets.strip
     puts "Please insert the student's main hobby"
     main_hobby = gets.strip
-    puts "What cohort are you in?"
+    puts "Please insert the student's cohort"
     cohort = gets.strip
       if cohort.empty?
         cohort = "Unknown"
@@ -41,8 +41,8 @@ end
 
 def print_students_list
   i = 0
-  while i < @students.length
-    puts "#{i+1}.  #{@students[i][:name]} #{@students[i][:country]} #{@students[i][:hobby]} (#{@students[i][:cohort]} cohort)".center(100)
+  @students.each do |student|
+    puts "#{i+1}.  #{student[:name]} #{student[:country]} #{student[:hobby]} (#{student[:cohort]} cohort)".center(100)
     i += 1
   end
 end
@@ -74,12 +74,26 @@ def show_students
   print_footer
 end
 
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
 def process(selection)
   case selection
     when "1"
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
