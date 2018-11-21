@@ -8,24 +8,23 @@ def print_menu
   puts "9. Exit"
 end
 
+def add_hashes_to_array(name, cohort)
+  cohort = cohort.to_sym
+  @students << {name: name, cohort: cohort}
+end
+
 
 def input_students
-  puts "Please enter the names of the students, their country of birth and main hobby"
   puts "To finish, just hit return twice"
   puts "Please insert the student's name"
   name = STDIN.gets.strip
   while !name.empty? do
-    puts "Please insert the student's country of birth"
-    country_of_birth = STDIN.gets.strip
-    puts "Please insert the student's main hobby"
-    main_hobby = STDIN.gets.strip
     puts "Please insert the student's cohort"
     cohort = STDIN.gets.strip
     if cohort.empty?
       cohort = "Unknown"
     end
-    cohort = cohort.to_sym
-    @students << {name: name, country: country_of_birth, hobby: main_hobby, cohort: cohort}
+    add_hashes_to_array(name, cohort)
     puts "Now we have #{@students.count} student" if @students.count == 1
     puts "Now we have #{@students.count} students" if @students.count != 1
     puts "Please insert the student's name"
@@ -91,7 +90,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    add_hashes_to_array(name, cohort)
   end
   file.close
 end
