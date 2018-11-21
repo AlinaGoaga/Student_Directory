@@ -21,9 +21,9 @@ def input_students
     main_hobby = STDIN.gets.strip
     puts "Please insert the student's cohort"
     cohort = STDIN.gets.strip
-      if cohort.empty?
-        cohort = "Unknown"
-      end
+    if cohort.empty?
+      cohort = "Unknown"
+    end
     cohort = cohort.to_sym
     @students << {name: name, country: country_of_birth, hobby: main_hobby, cohort: cohort}
     puts "Now we have #{@students.count} student" if @students.count == 1
@@ -90,38 +90,35 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
+    name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
 
-def try_load_students
-  filename = ARGV.first # first argument from the command line
-  return if filename.nil? # get out of the method if it isn't given
-  if File.exists?(filename) # if it exists
-    load_students(filename)
-     puts "Loaded #{@students.count} students from #{filename}"
-  else # if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
+def try_load_students #this loads the students from the file right at the beginning of the program
+  filename = ARGV.first
+  if filename == nil
+    filename = "students.csv"
   end
+  load_students(filename)
+  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 def process(selection)
   case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you mean, try again"
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "3"
+    save_students
+  when "4"
+    load_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you mean, try again"
   end
 end
 
