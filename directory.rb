@@ -16,7 +16,6 @@ end
 
 def input_students
   puts "To finish, just hit return twice"
-
   while true do
     puts "Please insert the student's name"
     name = STDIN.gets.strip
@@ -27,7 +26,7 @@ def input_students
     add_hashes_to_array(name, cohort)
     puts @students.count == 1 ? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
   end
-
+  puts "Good job on introducing the students!"
 end
 
 def print_header
@@ -71,6 +70,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "The students have been saved as per your request!"
 end
 
 def load_students(filename = "students.csv")
@@ -80,6 +80,7 @@ def load_students(filename = "students.csv")
     add_hashes_to_array(name, cohort)
   end
   file.close
+  puts "The students file had been loaded as per your request!"
 end
 
 def try_load_students #this loads the students from the file right at the beginning of the program
@@ -102,6 +103,7 @@ def process(selection)
   when "5"
     print_grouped_by_cohort
   when "9"
+    puts "Bye!"
     exit
   else
     puts "I don't know what you mean, try again"
