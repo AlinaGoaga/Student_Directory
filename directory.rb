@@ -1,10 +1,11 @@
 @students = [] # an empty array accessible to all methods
+@filename = ""
 
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list of students"
+  puts "4. Load the list of students"
   puts "5. Show students by cohort"
   puts "9. Exit"
 end
@@ -62,6 +63,12 @@ def show_students
   print_footer
 end
 
+def select_file
+  puts "Please choose a file to save to/load from"
+  @filename = STDIN.gets.strip
+  @filename = "students.csv" if @filename.empty?
+end
+
 def save_students
   file = File.open("students.csv", "w") # open the file for writing
   @students.each do |student| # iterate over the array of students
@@ -73,7 +80,7 @@ def save_students
   puts "The students have been saved as per your request!"
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
@@ -84,10 +91,10 @@ def load_students(filename = "students.csv")
 end
 
 def try_load_students #this loads the students from the file right at the beginning of the program
-  filename = ARGV.first
-  filename = "students.csv" if filename == nil
-  load_students(filename)
-  puts "Loaded #{@students.count} students from #{filename}"
+  @filename = ARGV.first
+  @filename = "students.csv" if @filename == nil
+  load_students(@filename)
+  puts "Loaded #{@students.count} students from #{@filename}"
 end
 
 def process(selection)
@@ -97,9 +104,11 @@ def process(selection)
   when "2"
     show_students
   when "3"
+    select_file
     save_students
   when "4"
-    load_students
+    select_file
+    load_students(@filename)
   when "5"
     print_grouped_by_cohort
   when "9"
