@@ -1,3 +1,5 @@
+require "csv"
+
 @students = [] # an empty array accessible to all methods
 @filename = ""
 
@@ -10,7 +12,7 @@ def print_menu
   puts "9. Exit"
 end
 
-def add_hashes_to_array(name, cohort)
+def add_students_to_list(name, cohort)
   cohort = cohort.to_sym
   @students << {name: name, cohort: cohort}
 end
@@ -24,7 +26,7 @@ def input_students
     puts "Please insert the student's cohort"
     cohort = STDIN.gets.strip
     cohort = "Unknown" if cohort.empty?
-    add_hashes_to_array(name, cohort)
+    add_students_to_list(name, cohort)
     puts @students.count == 1 ? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
   end
   puts "Good job on introducing the students!"
@@ -70,24 +72,21 @@ def select_file
 end
 
 def save_students
-  file = File.open("students.csv", "w") # open the file for writing
-  @students.each do |student| # iterate over the array of students
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  CSV.open(@filename, "w") do |file| # open the file for writing
+    @students.each do |student| # iterate over the array of students
+      student_data = [student[:name], student[:cohort]]
+      file << student_data
+    end
   end
-  file.close
-  puts "The students have been saved as per your request!"
+  puts "#{@students.count} students have been saved to #{@filename}"
 end
 
-def load_students(filename)
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_hashes_to_array(name, cohort)
+def load_students
+  CSV.foreach(@filename) do |line|
+    name, cohort = line
+    add_students_to_list(name, cohort)
   end
-  file.close
-  puts "The students file had been loaded as per your request!"
+  puts "#{@students.length} students have been loaded from #{@filename}"
 end
 
 def try_load_students #this loads the students from the file right at the beginning of the program
